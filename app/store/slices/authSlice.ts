@@ -1,9 +1,13 @@
-"use client";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+interface User {
+  name: string;
+  email: string;
+  photo?: string;
+}
 
 interface AuthState {
-  user: { name: string; email: string } | null;
+  user: User | null;
 }
 
 const initialState: AuthState = {
@@ -14,14 +18,16 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<{ name: string; email: string }>) {
+    setUser(state, action) {
       state.user = action.payload;
     },
     logout(state) {
       state.user = null;
+      localStorage.removeItem("token");
     },
   },
 });
 
 export const { setUser, logout } = authSlice.actions;
+
 export default authSlice.reducer;
