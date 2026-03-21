@@ -7,6 +7,7 @@ import { useState } from "react";
 import { apiFetch } from "../config/api";
 import DatePicker from "../components/DatePicker";
 import toast from "react-hot-toast";
+import { FaPlus } from "react-icons/fa";
 
 const AddTransaction = () => {
 	const initialFormValue = {
@@ -37,7 +38,11 @@ const AddTransaction = () => {
 
 	const handleAddTransaction = async () => {
 		try {
-			if(!formData.title || !formData.amount || formData.category === "Category"){
+			if (
+				!formData.title ||
+				!formData.amount ||
+				formData.category === "Category"
+			) {
 				toast.error("Please fill all the fields");
 				return;
 			}
@@ -61,7 +66,7 @@ const AddTransaction = () => {
 	};
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black mt-10">
+		<div className="flex items-center justify-center bg-zinc-50 font-sans dark:bg-black mt-30 p-4">
 			<div className="flex flex-col gap-5 items-center justify-center bg-zinc-800 p-10 rounded-xl lg:max-w-125 sm:w-full sm:m-10">
 				<div className="flex gap-10 justify-start w-full">
 					<label className="flex items-center gap-2 cursor-pointer">
@@ -116,7 +121,13 @@ const AddTransaction = () => {
 					value={formData.date}
 					onChange={(date) => setFormData({ ...formData, date })}
 				/>
-				<Button text="Add Transaction" onClick={handleAddTransaction} />
+				<button
+					onClick={handleAddTransaction}
+					className="flex items-center justify-center gap-2 px-6 py-3  bg-zinc-700 hover:bg-zinc-900 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.97]"
+				>
+					<FaPlus className="text-sm" />
+					Add Transaction
+				</button>
 			</div>
 		</div>
 	);

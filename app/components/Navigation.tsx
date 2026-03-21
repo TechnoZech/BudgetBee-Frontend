@@ -15,7 +15,7 @@ export default function Navbar() {
 
 	return (
 		<div className={parentCSS}>
-			<div className="flex items-center gap-2 mb-2 sm:mb-0">
+			<div className="flex items-center gap-2 sm:mb-0">
 				<Image width={40} height={40} src="/logo.png" alt="Logo" />
 				<Link className="font-bold text-xl" href="/">
 					BUDGETBEE
