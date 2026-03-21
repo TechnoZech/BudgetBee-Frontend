@@ -8,8 +8,8 @@ type ButtonProps = {
 };
 
 export default function Button({ className, onClick, text, url }: ButtonProps) {
-
-    const commonCSS = "px-8 py-3 rounded-md border border-violet-200 bg-violet-500 hover:bg-violet-600 cursor-pointer text-2xl";
+	const commonCSS =
+		"px-4 py-3 rounded-md border border-yellow-400 bg-yellow-300 hover:bg-yellow-400 text-black font-bold transition-colors duration-300 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-white";
 	return (
 		<>
 			{url ? (
@@ -17,10 +17,7 @@ export default function Button({ className, onClick, text, url }: ButtonProps) {
 					{text}
 				</Link>
 			) : (
-				<button
-					className={`${commonCSS} ${className}`}
-					onClick={onClick}
-				>
+				<button className={`${commonCSS} ${className}`} onClick={onClick}>
 					{text}
 				</button>
 			)}

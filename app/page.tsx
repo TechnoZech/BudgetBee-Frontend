@@ -1,6 +1,23 @@
+"use client";
+
+import { useEffect } from "react";
 import Button from "./components/Button";
+import { useAppSelector } from "./hooks/useAppSelector";
+import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
+  const user = useAppSelector((state) => state.auth.user);
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(user){
+      router.push("/home");
+    }
+  },[router, user])
+
+  if(!user){
+    return null;
+  }
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
     <div className="flex flex-col items-center justify-center">

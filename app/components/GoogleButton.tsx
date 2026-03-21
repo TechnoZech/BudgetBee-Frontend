@@ -33,7 +33,7 @@ export default function GoogleButton() {
       const data = await res.json();
 
       localStorage.setItem("token", data.token);
-
+      
       dispatch(
         setUser({
           name: data.user.name,
