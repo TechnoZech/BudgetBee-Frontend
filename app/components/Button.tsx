@@ -4,7 +4,7 @@ type ButtonProps = {
 	className?: string;
 	onClick?: () => void;
 	url?: string;
-	text: string;
+	text?: string;
 };
 
 export default function Button({ className, onClick, text, url }: ButtonProps) {
