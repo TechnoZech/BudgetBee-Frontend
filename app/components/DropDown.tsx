@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { categoryIcons } from "../utils/categoryIcons";
 
 const DropDown = ({
 	options,
 	handleDropdownChange,
 	title,
 }: {
-	options: string[];
+	options: { _id: string; name: string }[];
 	handleDropdownChange: (value: string) => void;
 	title: string;
 }) => {
@@ -34,8 +33,6 @@ const DropDown = ({
 		setOpen(false);
 	};
 
-	const SelectedIcon = categoryIcons[title];
-
 	return (
 		<div className="w-full">
 			<div ref={dropdownRef} className="relative w-full">
@@ -45,7 +42,6 @@ const DropDown = ({
 					className="w-full border border-zinc-700 bg-zinc-900 text-white rounded-lg px-4 py-3 text-left hover:border-zinc-500 inline-flex items-center justify-between"
 				>
 					<div className="flex items-center gap-2">
-						{SelectedIcon && <SelectedIcon />}
 						<span>{title}</span>
 					</div>
 
@@ -62,16 +58,14 @@ const DropDown = ({
 				{open && (
 					<ul className="absolute mt-2 w-full border border-zinc-700 bg-zinc-900 text-white rounded-lg py-2 shadow z-50 max-h-50 overflow-y-auto">
 						{options.map((option, idx) => {
-							const Icon = categoryIcons[option]; 
 
 							return (
 								<li key={idx}>
 									<button
-										onClick={() => handleOptionClick(option)}
+										onClick={() => handleOptionClick(option._id)}
 										className="w-full flex items-center gap-2 text-left px-4 py-2 hover:bg-zinc-700 rounded"
 									>
-										{Icon && <Icon />}
-										<span>{option}</span>
+										<span>{option.name}</span>
 									</button>
 								</li>
 							);

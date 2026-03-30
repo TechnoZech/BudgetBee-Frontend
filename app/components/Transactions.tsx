@@ -36,6 +36,7 @@ const Transactions = () => {
 
 				setTotalExpense(expense);
 				setTotalIncome(income);
+				console.log("transactons", data)
 			} catch (error) {
 				console.log("Failed to fetch transactions", error);
 			}

@@ -1,13 +1,13 @@
 "use client";
 
-import Button from "../components/Button";
 import Input from "../components/Input";
-import DropDown from "../components/DropDown";
+import CategorySelect from "../components/CategorySelect";
 import { useState } from "react";
 import { apiFetch } from "../config/api";
 import DatePicker from "../components/DatePicker";
 import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";
+import Link from "next/link";
 
 const AddTransaction = () => {
 	const initialFormValue = {
@@ -19,22 +19,6 @@ const AddTransaction = () => {
 	};
 
 	const [formData, setFormData] = useState(initialFormValue);
-
-	const debitOptions = [
-		"Food",
-		"Transport & Fuel",
-		"Entertainment",
-		"Bills",
-		"Health & Medicine",
-		"Shopping & Clothing",
-		"Education & Learning",
-		"Subscriptions",
-		"Travel",
-		"Gifts",
-		"Donations",
-		"Other",
-	];
-	const creditOptions = ["Salary", "Freelance", "Investment", "Gift", "Other"];
 
 	const handleAddTransaction = async () => {
 		try {
@@ -59,10 +43,6 @@ const AddTransaction = () => {
 			toast.error("Failed to add transactions");
 			console.log(error);
 		}
-	};
-
-	const handleDropdownChange = (value: string) => {
-		setFormData({ ...formData, category: value });
 	};
 
 	return (
@@ -104,30 +84,25 @@ const AddTransaction = () => {
 						setFormData({ ...formData, amount: e.target.value });
 					}}
 				></Input>
-				{formData.isCredit ? (
-					<DropDown
-						options={creditOptions}
-						handleDropdownChange={handleDropdownChange}
-						title={formData.category}
-					/>
-				) : (
-					<DropDown
-						options={debitOptions}
-						handleDropdownChange={handleDropdownChange}
-						title={formData.category}
-					/>
-				)}
+				<CategorySelect
+					isCredit={formData.isCredit}
+					value={formData.category}
+					onChange={(categoryId) =>
+						setFormData({ ...formData, category: categoryId })
+					}
+				/>
 				<DatePicker
 					value={formData.date}
 					onChange={(date) => setFormData({ ...formData, date })}
 				/>
-				<button
+				<Link
+					href="/home"
 					onClick={handleAddTransaction}
 					className="flex items-center justify-center gap-2 px-6 py-3  bg-zinc-700 hover:bg-zinc-900 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.97]"
 				>
 					<FaPlus className="text-sm" />
 					Add Transaction
-				</button>
+				</Link>
 			</div>
 		</div>
 	);
