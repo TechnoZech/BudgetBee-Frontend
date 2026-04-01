@@ -7,9 +7,14 @@ import { apiFetch } from "../config/api";
 import DatePicker from "../components/DatePicker";
 import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "../hooks/useAppSelector";
+import { fetchTransactions } from "../store/slices/transactionSlice";
 
 const AddTransaction = () => {
+
+	const router = useRouter();
+	const dispatch = useAppDispatch();
 	const initialFormValue = {
 		isCredit: false,
 		title: "",
@@ -38,6 +43,8 @@ const AddTransaction = () => {
 			if (response.status === 201) {
 				toast.success(data.message);
 				setFormData(initialFormValue);
+				dispatch(fetchTransactions());
+				router.push("/home");
 			}
 		} catch (error) {
 			toast.error("Failed to add transactions");
@@ -95,14 +102,13 @@ const AddTransaction = () => {
 					value={formData.date}
 					onChange={(date) => setFormData({ ...formData, date })}
 				/>
-				<Link
-					href="/home"
+				<button
 					onClick={handleAddTransaction}
 					className="flex items-center justify-center gap-2 px-6 py-3  bg-zinc-700 hover:bg-zinc-900 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.97]"
 				>
 					<FaPlus className="text-sm" />
 					Add Transaction
-				</Link>
+				</button>
 			</div>
 		</div>
 	);

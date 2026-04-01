@@ -9,7 +9,7 @@ import Link from "next/link";
 import { fetchTransactions } from "../store/slices/transactionSlice";
 
 
-export default function Home() {
+export default function Transaction() {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 

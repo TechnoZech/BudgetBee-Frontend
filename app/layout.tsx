@@ -10,6 +10,7 @@ import { useAppDispatch } from "./hooks/useAppSelector";
 import "./globals.css";
 import Navbar from "./components/Navigation";
 import { Toaster } from "react-hot-toast";
+import BottomNavigation from "./components/BottomNavigation";
 
 function AuthLoader({ children }: { children: React.ReactNode }) {
 	const dispatch = useAppDispatch();
@@ -64,6 +65,7 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 		<>
 			<Navbar />
 			{children}
+			<BottomNavigation />
 		</>
 	);
 }

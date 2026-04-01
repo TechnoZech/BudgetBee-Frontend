@@ -8,11 +8,11 @@ interface User {
 }
 
 interface AuthState {
-  user: User | null;
+  user: User | null | undefined;
 }
 
 const initialState: AuthState = {
-  user: null,
+  user: undefined,
 };
 
 const authSlice = createSlice({
