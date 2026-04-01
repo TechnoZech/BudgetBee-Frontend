@@ -10,7 +10,13 @@ import {
 	CartesianGrid,
 } from "recharts";
 
-const LineChart = ({ data }: { data: any[] }) => {
+interface Transaction {
+  date: string;
+  amount: number;
+  type: boolean;
+}
+
+const LineChart = ({ data }: { data: Transaction[] }) => {
 	if (!data || data.length === 0)
 		return <p className="text-center mt-4">No data to display</p>;
 

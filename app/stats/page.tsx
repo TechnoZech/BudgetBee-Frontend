@@ -11,20 +11,11 @@ import {
 	Legend,
 } from "recharts";
 
-interface Transaction {
-	id: string;
-	amount: number;
-	type: boolean; // true = income, false = expense
-	date: string;
-	category: string; // e.g., "Food", "Salary", etc.
-}
-
 const Stats = () => {
-	const transactions: Transaction[] = useAppSelector(
+	const transactions = useAppSelector(
 		(state) => state.transaction.transactions,
 	);
 
-	// 1️⃣ Total Income vs Expense
 	const totalData = [
 		{
 			name: "Income",
@@ -40,7 +31,6 @@ const Stats = () => {
 		},
 	];
 
-	// 2️⃣ Expense by category
 	const expenseData = Object.values(
 		transactions
 			.filter((t) => t.type === false)
@@ -51,7 +41,6 @@ const Stats = () => {
 			}, {}),
 	);
 
-	// 3️⃣ Income by category
 	const incomeData = Object.values(
 		transactions
 			.filter((t) => t.type === true)
@@ -72,6 +61,11 @@ const Stats = () => {
 		"#fbbf24",
 		"#22d3ee",
 	];
+
+	const tooltipFormatter = (
+		value: number | string | undefined,
+		name: string | undefined,
+	) => [value ?? 0, name ?? ""];
 
 	const renderPieChart = (
 		data: { name: string; value: number }[],
@@ -98,7 +92,6 @@ const Stats = () => {
 						))}
 					</Pie>
 					<Tooltip
-						formatter={(value: number, name: string) => [`${value}`, name]}
 						contentStyle={{
 							backgroundColor: "#1f2937",
 							border: "none",

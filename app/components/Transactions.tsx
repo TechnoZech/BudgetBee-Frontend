@@ -14,7 +14,7 @@ const Transactions = () => {
 	
 	return (
 		<div>
-			<div className="absolute top-35 left-0 right-0 flex gap-5 px-7">
+			<div className="absolute top-30 left-0 right-0 flex gap-5 px-7">
 				<div className="flex-1 flex flex-col items-center justify-center h-20 rounded-xl border border-red-400 bg-red-100 text-red-700 shadow-sm dark:bg-red-900/30 dark:text-red-400 dark:border-red-800">
 					<span className="text-sm font-medium">Expense</span>
 					<span className="text-lg font-bold">

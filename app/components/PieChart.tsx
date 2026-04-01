@@ -47,7 +47,6 @@ const PieChart = ({
 						))}
 					</Pie>
 					<Tooltip
-						formatter={(value: number, name: string) => [`${value}`, name]}
 						contentStyle={{
 							backgroundColor: "#1f2937",
 							border: "none",
