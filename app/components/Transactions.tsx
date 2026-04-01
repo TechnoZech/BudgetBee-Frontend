@@ -29,7 +29,7 @@ const Transactions = () => {
 					</span>
 				</div>
 			</div>
-			<div className=" bg-black text-white p-4 mt-50 h-110 overflow-y-auto rounded-lg">
+			<div className=" bg-black text-white p-4 mt-40 h-110 overflow-y-auto rounded-lg">
 				<div className="space-y-4">
 					{transactions.map((transaction, idx) => {
 						const Icon = categoryIcons[transaction.category?.trim()];
