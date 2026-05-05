@@ -61,6 +61,24 @@ const UpdateTransaction = () => {
 		}
 	};
 
+	const handleDeleteTransaction = async () => {
+		try {
+			const response = await apiFetch('/transactions', {
+				method: "DELETE",
+				body: JSON.stringify({ _id: formData._id }),
+			})
+			const data: { message: string; status?: number } = await response.json();
+			if (response.status === 200) {
+				toast.success(data.message);
+				dispatch(fetchTransactions());
+				router.push("/home");
+			}
+		} catch (error) {
+			toast.error("Failed to delete transaction");
+			console.log(error);
+		}
+	}
+
 	return (
 		<div className="flex items-center justify-center bg-zinc-50 font-sans dark:bg-black mt-30 p-4">
 			<div className="flex flex-col gap-5 items-center justify-center bg-zinc-800 p-10 rounded-xl lg:max-w-125 sm:w-full sm:m-10">
@@ -116,6 +134,12 @@ const UpdateTransaction = () => {
 					className="flex items-center justify-center gap-2 px-6 py-3  bg-zinc-700 hover:bg-zinc-900 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.97]"
 				>
 					Update Transaction
+				</button>
+				<button
+					onClick={handleDeleteTransaction}
+					className="flex items-center justify-center gap-2 px-6 py-3 bg-red-700/70 hover:bg-red-800 text-red-50 font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.97]"
+				>
+					Delete Transaction
 				</button>
 			</div>
 		</div>
