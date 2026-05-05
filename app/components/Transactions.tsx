@@ -44,8 +44,9 @@ const Transactions = () => {
 			<div className=" bg-black text-white p-4 mt-40 h-110 overflow-y-auto rounded-lg">
 				<div className="space-y-4">
 					{transactions.map((transaction, idx) => {
-						// const Icon = categoryIcons[transaction.category?.name?.trim()];
-						const Icon = categoryIcons[0];
+						const iconName = transaction.category?.name?.trim() || "Other";
+						let Icon = null;
+						Icon = categoryIcons[iconName] || categoryIcons.Other;
 						const isCredit = transaction.type;
 
 						return (

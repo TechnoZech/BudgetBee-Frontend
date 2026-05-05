@@ -15,6 +15,7 @@ import {
   FaChartLine,
   FaWallet,
 } from "react-icons/fa";
+import { BsBrilliance } from "react-icons/bs";
 import { IconType } from "react-icons";
 
 export const categoryIcons: Record<string, IconType> = {
@@ -37,5 +38,5 @@ export const categoryIcons: Record<string, IconType> = {
   Investment: FaChartLine,
   Gift: FaGift,
 
-  Other: FaWallet,
+  Other: BsBrilliance,
 };
