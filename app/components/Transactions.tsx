@@ -2,8 +2,12 @@
 
 import { categoryIcons } from "../utils/categoryIcons";
 import { useAppSelector } from "../hooks/useAppSelector";
+import { useRouter } from "next/navigation";
 const Transactions = () => {
-	const transactions = useAppSelector((state) => state.transaction.transactions);
+	const router = useRouter();
+	const transactions = useAppSelector(
+		(state) => state.transaction.transactions,
+	);
 	const totalExpense = transactions
 		.filter((t) => !t.type)
 		.reduce((sum, t) => sum + t.amount, 0);
@@ -11,7 +15,15 @@ const Transactions = () => {
 	const totalIncome = transactions
 		.filter((t) => t.type)
 		.reduce((sum, t) => sum + t.amount, 0);
-	
+
+	const handleTransactionClick = async (transactionId: string) => {
+		try {
+			router.push(`/transactions/${transactionId}`);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<div>
 			<div className="absolute top-30 left-0 right-0 flex gap-5 px-7">
@@ -32,14 +44,15 @@ const Transactions = () => {
 			<div className=" bg-black text-white p-4 mt-40 h-110 overflow-y-auto rounded-lg">
 				<div className="space-y-4">
 					{transactions.map((transaction, idx) => {
-						const Icon = categoryIcons[transaction.category?.trim()];
-
+						// const Icon = categoryIcons[transaction.category?.name?.trim()];
+						const Icon = categoryIcons[0];
 						const isCredit = transaction.type;
 
 						return (
 							<div
 								key={idx}
-								className="flex items-center justify-between bg-zinc-900 border border-zinc-800 p-4 rounded-xl shadow hover:border-zinc-700 transition"
+								onClick={() => handleTransactionClick(transaction._id)}
+								className="flex items-center justify-between bg-zinc-900 border border-zinc-800 p-4 rounded-xl shadow hover:border-zinc-700 transition cursor-pointer"
 							>
 								{/* LEFT SIDE */}
 								<div className="flex items-center gap-4">
@@ -64,7 +77,7 @@ const Transactions = () => {
 											{transaction.title}
 										</h3>
 										<p className="text-sm text-gray-400">
-											{transaction.category}
+											{transaction.category?.name}
 										</p>
 									</div>
 								</div>

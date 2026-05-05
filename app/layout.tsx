@@ -6,14 +6,18 @@ import { auth } from "./config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { setUser, logout } from "./store/slices/authSlice";
 import { useEffect } from "react";
-import { useAppDispatch } from "./hooks/useAppSelector";
+import { useAppDispatch, useAppSelector } from "./hooks/useAppSelector";
 import "./globals.css";
 import Navbar from "./components/Navigation";
 import { Toaster } from "react-hot-toast";
 import BottomNavigation from "./components/BottomNavigation";
+import { fetchCategories } from "./store/slices/categoriesSlice";
+import { RootState } from "./store";
 
 function AuthLoader({ children }: { children: React.ReactNode }) {
 	const dispatch = useAppDispatch();
+	const categoriesFetched = useAppSelector((state: RootState) => state.categories.fetched);
+	const user = useAppSelector((state) => state.auth.user);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth!, async (firebaseUser) => {
@@ -60,6 +64,12 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 
 		return () => unsubscribe();
 	}, [dispatch]);
+
+	useEffect(()=>{
+		if(!categoriesFetched && user){
+			dispatch(fetchCategories());
+		}
+	}, [categoriesFetched, dispatch, user]);
 
 	return (
 		<>

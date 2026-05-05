@@ -2,18 +2,23 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { apiFetch } from "@/app/config/api";
 
 export interface Transaction {
+	_id: string;
 	title: string;
 	amount: number;
 	date: string;
-	category: string;
 	type: boolean;
+	category: {
+		name: string;
+	} | null;
 }
 
 interface Filters {
 	startDate?: string | null;
 	endDate?: string | null;
 	type?: "credit" | "debit" | null;
-	category?: string | null;
+	category?: {
+		name: string;
+	} | null;
 }
 
 interface TransactionState {
@@ -55,15 +60,15 @@ export const fetchTransactions = createAsyncThunk<
 		if (filters.startDate) params.append("startDate", filters.startDate);
 		if (filters.endDate) params.append("endDate", filters.endDate);
 		if (filters.type) params.append("type", filters.type);
-		if (filters.category) params.append("category", filters.category);
+		// if (filters.category) params.append("category", filters.category);
 
 		const res = await apiFetch(`/transactions?${params.toString()}`, {
 			method: "GET",
 		});
-
+		const data = await res.json();
 		if (!res.ok) throw new Error("Failed to fetch");
 
-		return await res.json();
+		return data;
 	} catch (error: unknown) {
 		if (error instanceof Error) {
 			return rejectWithValue(error.message);

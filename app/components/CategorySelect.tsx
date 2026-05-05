@@ -1,41 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { apiFetch } from "../config/api";
 import slugify from "slugify";
 import toast from "react-hot-toast";
 import DropDown from "./DropDown";
-
-type Category = {
-	_id: string;
-	name: string;
-	slug: string;
-	type: boolean;
-};
+import { useAppDispatch, useAppSelector } from "../hooks/useAppSelector";
+import { fetchCategories } from "../store/slices/categoriesSlice";
 
 type Props = {
 	isCredit: boolean;
-	value: string;
+	id: string;
 	onChange: (categoryId: string) => void;
+
 };
 
-const CategorySelect = ({ isCredit, value, onChange }: Props) => {
-	const [categories, setCategories] = useState<Category[]>([]);
+const CategorySelect = ({ isCredit, id, onChange }: Props) => {
 	const [newCategory, setNewCategory] = useState("");
-
-	useEffect(() => {
-		const fetchCategories = async () => {
-			try {
-				const res = await apiFetch(`/categories?type=${isCredit}`);
-				const data = await res.json();
-				setCategories(data.categories);
-			} catch (err) {
-				console.log(err);
-				toast.error("Failed to load categories");
-			}
-		};
-		fetchCategories();
-	}, [isCredit]);
+	const dispatch = useAppDispatch();
+	const categories = useAppSelector((state) => state.categories.categories);
+	let categoryOptions = Array.isArray(categories) ? categories : [];
+	categoryOptions = categoryOptions.filter((category) => category.type === isCredit);
 
 	const handleCreateCategory = async () => {
 		if (!newCategory.trim()) {
@@ -60,17 +45,7 @@ const CategorySelect = ({ isCredit, value, onChange }: Props) => {
 				toast.success(data.message);
 				setNewCategory("");
 
-				const fetchCategories = async () => {
-					try {
-						const res = await apiFetch(`/categories?type=${isCredit}`);
-						const data = await res.json();
-						setCategories(data.categories);
-					} catch (err) {
-						console.log(err);
-						toast.error("Failed to load categories");
-					}
-				};
-				fetchCategories();
+				await dispatch(fetchCategories());
 
 				onChange(data.category._id);
 			} else {
@@ -86,24 +61,22 @@ const CategorySelect = ({ isCredit, value, onChange }: Props) => {
 		<div className="w-full space-y-3">
 			<DropDown
 				options={[
-					...categories,
+					...categoryOptions,
 					{
 						_id: "__new__",
-						name: "Create New Category",
-						slug: "",
-						type: isCredit,
+						name: "Create New Category"
 					},
 				]}
 				handleDropdownChange={onChange}
 				title={
-					value
-						? categories.find((c) => c._id === value)?.name || "Select Category"
+					id
+						? categoryOptions.find((c) => c._id === id)?.name || "Select Category"
 						: "Select Category"
 				}
 			/>
 
 			{/* Create New Category */}
-			{value === "__new__" && (
+			{id === "__new__" && (
 				<div className="flex gap-2 mt-5">
 					<input
 						type="text"
