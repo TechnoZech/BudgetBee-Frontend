@@ -93,7 +93,7 @@ const AddTransaction = () => {
 				></Input>
 				<CategorySelect
 					isCredit={formData.isCredit}
-					value={formData.category}
+					id={formData.category}
 					onChange={(categoryId) =>
 						setFormData({ ...formData, category: categoryId })
 					}
