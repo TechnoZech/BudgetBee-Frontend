@@ -18,6 +18,7 @@ const UpdateTransaction = () => {
 	const transactions = useAppSelector(
 		(state) => state.transaction.transactions,
 	);
+	const categories = useAppSelector((state) => state.categories.categories);
 
 	const transaction = transactions.find((t) => t._id === params.id);
 	
@@ -27,7 +28,7 @@ const UpdateTransaction = () => {
 		_id: transaction?._id || "",
 		isCredit: transaction?.type || false,
 		title: transaction?.title || "",
-		category: transaction?.category || {name: "Category"},
+		category: transaction?.category || { name: "Category", _id: "" },
 		amount: transaction?.amount?.toString() || "",
 		date: transaction?.date ? new Date(transaction.date) : new Date(),
 	};
@@ -121,9 +122,16 @@ const UpdateTransaction = () => {
 				<CategorySelect
 					isCredit={formData.isCredit}
 					id={formData.category._id || ""}
-					onChange={(categoryId) =>
-						setFormData({ ...formData, category: { _id: categoryId } })
-					}
+					onChange={(categoryId) => {
+						const picked = categories.find((c) => c._id === categoryId);
+						setFormData({
+							...formData,
+							category: {
+								_id: categoryId,
+								name: picked?.name ?? formData.category.name,
+							},
+						});
+					}}
 				/>
 				<DatePicker
 					value={formData.date}

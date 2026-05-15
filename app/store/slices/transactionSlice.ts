@@ -9,6 +9,7 @@ export interface Transaction {
 	type: boolean;
 	category: {
 		name: string;
+		_id: string;
 	} | null;
 }
 
@@ -18,6 +19,7 @@ interface Filters {
 	type?: "credit" | "debit" | null;
 	category?: {
 		name: string;
+		_id: string;
 	} | null;
 }
 
