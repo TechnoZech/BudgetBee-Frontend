@@ -35,8 +35,9 @@ const Stats = () => {
 		transactions
 			.filter((t) => t.type === false)
 			.reduce((acc: Record<string, { name: string; value: number }>, t) => {
-				if (!acc[t.category]) acc[t.category] = { name: t.category, value: 0 };
-				acc[t.category].value += t.amount;
+				const key = t.category?.name ?? "Uncategorized";
+				if (!acc[key]) acc[key] = { name: key, value: 0 };
+				acc[key].value += t.amount;
 				return acc;
 			}, {}),
 	);
@@ -45,8 +46,9 @@ const Stats = () => {
 		transactions
 			.filter((t) => t.type === true)
 			.reduce((acc: Record<string, { name: string; value: number }>, t) => {
-				if (!acc[t.category]) acc[t.category] = { name: t.category, value: 0 };
-				acc[t.category].value += t.amount;
+				const key = t.category?.name ?? "Uncategorized";
+				if (!acc[key]) acc[key] = { name: key, value: 0 };
+				acc[key].value += t.amount;
 				return acc;
 			}, {}),
 	);
@@ -61,11 +63,6 @@ const Stats = () => {
 		"#fbbf24",
 		"#22d3ee",
 	];
-
-	const tooltipFormatter = (
-		value: number | string | undefined,
-		name: string | undefined,
-	) => [value ?? 0, name ?? ""];
 
 	const renderPieChart = (
 		data: { name: string; value: number }[],
