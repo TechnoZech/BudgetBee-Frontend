@@ -53,7 +53,7 @@ const AddTransaction = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-center bg-zinc-50 font-sans dark:bg-black mt-30 p-4">
+		<div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-black">
 			<div className="flex flex-col gap-5 items-center justify-center bg-zinc-800 p-10 rounded-xl lg:max-w-125 sm:w-full sm:m-10">
 				<div className="flex gap-10 justify-start w-full">
 					<label className="flex items-center gap-2 cursor-pointer">

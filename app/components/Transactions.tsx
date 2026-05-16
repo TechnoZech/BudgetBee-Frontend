@@ -3,6 +3,8 @@
 import { categoryIcons } from "../utils/categoryIcons";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useRouter } from "next/navigation";
+import DateRangePicker from "./DateRangePicker";
+
 const Transactions = () => {
 	const router = useRouter();
 	const transactions = useAppSelector(
@@ -25,8 +27,8 @@ const Transactions = () => {
 	};
 
 	return (
-		<div>
-			<div className="absolute top-30 left-0 right-0 flex gap-5 px-7">
+		<div className="max-h-screen px-5">
+			<div className="flex gap-5 pb-5">
 				<div className="flex-1 flex flex-col items-center justify-center h-20 rounded-xl border border-red-400 bg-red-100 text-red-700 shadow-sm dark:bg-red-900/30 dark:text-red-400 dark:border-red-800">
 					<span className="text-sm font-medium">Expense</span>
 					<span className="text-lg font-bold">
@@ -41,7 +43,10 @@ const Transactions = () => {
 					</span>
 				</div>
 			</div>
-			<div className=" bg-black text-white p-4 mt-40 h-110 overflow-y-auto rounded-lg">
+			<div>
+				<DateRangePicker />
+			</div>
+			<div className="max-h-[390px] bg-black text-white pb-5 mt-3 overflow-y-auto rounded-lg">
 				<div className="space-y-4">
 					{transactions.map((transaction, idx) => {
 						const iconName = transaction.category?.name?.trim() || "Other";

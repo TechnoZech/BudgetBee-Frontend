@@ -103,7 +103,7 @@ const Stats = () => {
 	);
 
 	return (
-		<div className="mt-30 flex min-h-screen flex-col justify-center bg-zinc-50 dark:bg-black text-center p-4 gap-8">
+		<div className="pt-15 flex min-h-screen flex-col justify-center bg-zinc-50 dark:bg-black text-center p-4 gap-8">
 			<LineChart data={transactions} />
 			<div className="flex flex-wrap justify-center gap-4">
 				{renderPieChart(expenseData, "Expenses by Category")}
