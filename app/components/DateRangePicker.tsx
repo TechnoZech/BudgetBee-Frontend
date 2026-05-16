@@ -98,9 +98,11 @@ function formatRangeBrief(start: Date, end: Date) {
 const DateRangePicker = ({
 	value,
 	onChange,
+	onSelect,
 }: {
 	value?: DateRangeValue;
 	onChange?: (range: DateRangeValue) => void;
+	onSelect?: (start: Date, end: Date) => void;
 }) => {
 	const [open, setOpen] = useState(false);
 	const [activePreset, setActivePreset] = useState<DateRangePreset>(
@@ -132,8 +134,9 @@ const DateRangePicker = ({
 			setRangeStart(start);
 			setRangeEnd(end);
 			onChange?.(next);
+			onSelect?.(start, end);
 		},
-		[onChange],
+		[onChange, onSelect],
 	);
 
 	useEffect(() => {

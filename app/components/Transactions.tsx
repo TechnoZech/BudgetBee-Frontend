@@ -4,6 +4,7 @@ import { categoryIcons } from "../utils/categoryIcons";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { useRouter } from "next/navigation";
 import DateRangePicker from "./DateRangePicker";
+import { apiFetch } from "../config/api";
 
 const Transactions = () => {
 	const router = useRouter();
@@ -26,6 +27,12 @@ const Transactions = () => {
 		}
 	};
 
+	const handleDataFetch = async (start: Date, end: Date) => {
+		console.log("runnnn", start, end);
+		// const response = await apiFetch()
+	};
+
+
 	return (
 		<div className="max-h-screen px-5">
 			<div className="flex gap-5 pb-5">
@@ -44,7 +51,7 @@ const Transactions = () => {
 				</div>
 			</div>
 			<div>
-				<DateRangePicker />
+				<DateRangePicker onSelect={handleDataFetch} />
 			</div>
 			<div className="max-h-[390px] bg-black text-white pb-5 mt-3 overflow-y-auto rounded-lg">
 				<div className="space-y-4">
