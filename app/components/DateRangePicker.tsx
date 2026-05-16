@@ -218,7 +218,7 @@ const DateRangePicker = ({
 			</button>
 
 			{open && (
-				<div className="absolute my-2 w-72 bg-zinc-900 border border-zinc-700 rounded-xl shadow-lg p-4 z-50 text-white max-h-[min(90vh,32rem)] overflow-y-auto">
+				<div className="absolute my-2 w-72 bg-zinc-900 border border-zinc-700 rounded-xl shadow-lg p-4 z-[99999999] text-white max-h-[min(90vh,32rem)] overflow-y-auto">
 					<div className="space-y-1 mb-3">
 						{PRESET_LABELS.map(({ id, label }) => (
 							<button

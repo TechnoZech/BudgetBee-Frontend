@@ -1,13 +1,24 @@
 "use client";
 
 import { categoryIcons } from "../utils/categoryIcons";
-import { useAppSelector } from "../hooks/useAppSelector";
+import { useAppDispatch, useAppSelector } from "../hooks/useAppSelector";
 import { useRouter } from "next/navigation";
 import DateRangePicker from "./DateRangePicker";
-import { apiFetch } from "../config/api";
+import {
+	fetchTransactions,
+	setFilters,
+} from "../store/slices/transactionSlice";
+
+function formatFilterDate(date: Date) {
+	const y = date.getFullYear();
+	const m = String(date.getMonth() + 1).padStart(2, "0");
+	const d = String(date.getDate()).padStart(2, "0");
+	return `${y}-${m}-${d}`;
+}
 
 const Transactions = () => {
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 	const transactions = useAppSelector(
 		(state) => state.transaction.transactions,
 	);
@@ -28,8 +39,13 @@ const Transactions = () => {
 	};
 
 	const handleDataFetch = async (start: Date, end: Date) => {
-		console.log("runnnn", start, end);
-		// const response = await apiFetch()
+		dispatch(
+			setFilters({
+				startDate: formatFilterDate(start),
+				endDate: formatFilterDate(end),
+			}),
+		);
+		await dispatch(fetchTransactions());
 	};
 
 
