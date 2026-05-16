@@ -106,15 +106,15 @@ const DateRangePicker = ({
 }) => {
 	const [open, setOpen] = useState(false);
 	const [activePreset, setActivePreset] = useState<DateRangePreset>(
-		value?.preset ?? "last7",
+		value?.preset ?? "thisMonth",
 	);
 	const [rangeStart, setRangeStart] = useState<Date>(() => {
 		if (value) return startOfDay(value.start);
-		return getPresetRange("last7").start;
+		return getPresetRange("thisMonth").start;
 	});
 	const [rangeEnd, setRangeEnd] = useState<Date>(() => {
 		if (value) return endOfDay(value.end);
-		return getPresetRange("last7").end;
+		return getPresetRange("thisMonth").end;
 	});
 
 	const [showCustomCalendar, setShowCustomCalendar] = useState(false);
